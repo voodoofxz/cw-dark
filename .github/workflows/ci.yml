@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate manifest
+        run: |
+          node -e '
+            const m = require("./extension/manifest.json");
+            if (m.manifest_version !== 3) throw new Error("manifest_version must be 3");
+            if (!/^\d+(\.\d+){0,3}$/.test(m.version)) throw new Error("Invalid version: " + m.version);
+            if ((m.description || "").length > 132) throw new Error("Description over 132 characters");
+            console.log("manifest ok:", m.name, m.version);
+          '
+
+      - name: Check JavaScript syntax
+        run: for f in extension/*.js; do node --check "$f"; done
+
+      - name: Check referenced files exist
+        run: |
+          node -e '
+            const fs = require("fs"), m = require("./extension/manifest.json");
+            const files = [
+              m.background?.service_worker, m.action?.default_popup, m.options_page,
+              ...Object.values(m.icons || {}), ...Object.values(m.action?.default_icon || {}),
+              "content.js", "dark.css", "highlight.js", "highlight.css"
+            ].filter(Boolean);
+            const missing = files.filter((f) => !fs.existsSync("extension/" + f));
+            if (missing.length) throw new Error("Missing: " + missing.join(", "));
+            console.log("all referenced files present");
+          '
+
+      - name: Changelog has an entry for this version
+        run: |
+          v=$(node -p 'require("./extension/manifest.json").version')
+          grep -q "^## $v\$" CHANGELOG.md || { echo "CHANGELOG.md has no '## $v' section"; exit 1; }

@@ -1,0 +1,12 @@
+# Build output
+*.zip
+dist/
+
+# Screenshot drafts (may contain client data)
+store/screenshots-raw/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="ui.css">
+<style>
+  body { width: 320px; padding: 18px; display: grid; gap: 16px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .status { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 10px; }
+  .status strong { display: block; font-weight: 600; word-break: break-all; }
+  .sliders { display: grid; gap: 8px; }
+  footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1 style="font-size:17px">ConnectWise theme</h1>
+      <p class="muted" id="state-label"></p>
+    </div>
+    <div class="theme" role="radiogroup" aria-label="Theme">
+      <button type="button" role="radio" data-theme="dark" aria-checked="false"><span aria-hidden="true">☾</span> Dark</button>
+      <button type="button" role="radio" data-theme="light" aria-checked="false"><span aria-hidden="true">☀</span> Light</button>
+    </div>
+  </header>
+
+  <section class="status" id="status">
+    <div>
+      <span class="muted" style="font-size:12px">This tab</span>
+      <strong id="host">—</strong>
+    </div>
+    <p id="host-note" class="muted"></p>
+    <button id="add-current" class="primary" hidden>Add this site</button>
+    <p class="msg" id="msg"></p>
+  </section>
+
+  <section class="sliders" id="sliders">
+    <div class="slider-row">
+      <label for="brightness">Brightness</label>
+      <input type="range" id="brightness" min="60" max="120" step="1">
+      <output id="brightness-out"></output>
+    </div>
+    <div class="slider-row">
+      <label for="contrast">Contrast</label>
+      <input type="range" id="contrast" min="60" max="120" step="1">
+      <output id="contrast-out"></output>
+    </div>
+  </section>
+
+  <footer>
+    <span class="muted" id="site-count"></span>
+    <a href="#" id="open-options">Manage settings</a>
+  </footer>
+
+<script src="shared.js"></script>
+<script src="theme.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

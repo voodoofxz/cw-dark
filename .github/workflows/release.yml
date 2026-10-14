@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write   # needed to create the GitHub release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check tag matches manifest version
+        id: ver
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          v=$(node -p 'require("./extension/manifest.json").version')
+          if [ "$tag" != "$v" ]; then
+            echo "Tag v$tag does not match manifest version $v"; exit 1
+          fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
+      - name: Build zip
+        run: |
+          mkdir -p dist
+          cd extension && zip -r "../dist/cw-dark-${{ steps.ver.outputs.version }}.zip" . -x '.*'
+
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          awk -v v="## ${{ steps.ver.outputs.version }}" '
+            $0 == v { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md > dist/notes.md
+          [ -s dist/notes.md ] || echo "See CHANGELOG.md" > dist/notes.md
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "dist/cw-dark-${{ steps.ver.outputs.version }}.zip" \
+            --title "v${{ steps.ver.outputs.version }}" \
+            --notes-file dist/notes.md

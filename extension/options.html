@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ConnectWise PSA Dark Mode — Options</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  main { max-width: 640px; margin: 0 auto; padding: 48px 24px 64px; display: grid; gap: 36px; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+  .top h1 { font-size: 26px; }
+  section { display: grid; gap: 14px; }
+  section h2 { font-size: 16px; }
+  .add-row { display: flex; gap: 8px; }
+  .add-row input { flex: 1; }
+  ul { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; background: var(--panel); }
+  li + li { border-top: 1px solid var(--line); }
+  li code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 13px; word-break: break-all; }
+  li .warn { color: var(--danger); font-size: 12px; }
+  .empty { padding: 16px 12px; color: var(--muted); background: var(--panel); }
+  .remove { padding: 4px 10px; font-size: 13px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; }
+  .check input { margin-top: 3px; }
+  .hl-row input[type="text"] { flex: 1; }
+  .hl-row input[type="color"] { width: 44px; height: 34px; padding: 2px; border: 1px solid var(--line); border-radius: 6px; background: #0f1222; cursor: pointer; }
+  .hl-row { gap: 8px; }
+  .row-end { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div>
+      <h1>ConnectWise PSA Dark Mode</h1>
+      <p class="muted">Runs only on the sites you add here. Status highlights work in both themes. Shortcut: Alt+Shift+D switches themes.</p>
+    </div>
+    <div class="theme" role="radiogroup" aria-label="Theme">
+      <button type="button" role="radio" data-theme="dark" aria-checked="false"><span aria-hidden="true">☾</span> Dark</button>
+      <button type="button" role="radio" data-theme="light" aria-checked="false"><span aria-hidden="true">☀</span> Light</button>
+    </div>
+  </div>
+
+  <section>
+    <h2>Your ConnectWise sites</h2>
+    <p class="muted">Enter the address you use to open ConnectWise PSA. Cloud examples: <code>na.myconnectwise.net</code>, <code>eu.myconnectwise.net</code>, <code>au.myconnectwise.net</code>. Self-hosted: your own hostname, like <code>cw.yourcompany.com</code>. Pasting a full URL works too.</p>
+    <form class="add-row" id="add-form">
+      <input type="text" id="site-input" placeholder="na.myconnectwise.net" autocomplete="off" spellcheck="false" aria-label="ConnectWise site address">
+      <button type="submit" class="primary">Add site</button>
+    </form>
+    <p class="msg" id="site-msg"></p>
+    <ul id="site-list"></ul>
+  </section>
+
+  <section>
+    <h2>Dark theme</h2>
+    <div class="slider-row">
+      <label for="brightness">Brightness</label>
+      <input type="range" id="brightness" min="60" max="120" step="1">
+      <output id="brightness-out"></output>
+    </div>
+    <div class="slider-row">
+      <label for="contrast">Contrast</label>
+      <input type="range" id="contrast" min="60" max="120" step="1">
+      <output id="contrast-out"></output>
+    </div>
+    <label class="check">
+      <input type="checkbox" id="keepImages">
+      <span>Keep images in their original colors<br><span class="muted">Logos, photos and attachment previews won't be inverted.</span></span>
+    </label>
+    <label class="check">
+      <input type="checkbox" id="keepDark">
+      <span>Keep already-dark areas dark<br><span class="muted">Stops the left navigation bar and other dark panels from turning light.</span></span>
+    </label>
+  </section>
+
+  <section>
+    <h2>Status highlights</h2>
+    <p class="muted">Tickets in these statuses are tinted and bolded in ticket lists and service boards. Type the status as it appears in ConnectWise; capitalization doesn't matter. Use <code>*</code> for any characters and <code>?</code> for a single character, so <code>New*</code> matches New, New (email) and New (portal). If a status matches more than one entry, the one higher in the list wins.</p>
+    <p class="muted">Export saves this list as a file you can send to a coworker. Import adds a file's statuses to your list, replacing colors for statuses you already have; review the list, then save.</p>
+    <ul id="hl-list"></ul>
+    <div class="row-end">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="hl-add">Add status</button>
+        <button id="hl-export">Export</button>
+        <button id="hl-import">Import</button>
+        <input type="file" id="hl-file" accept=".json,application/json" hidden>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <p class="msg" id="hl-msg"></p>
+        <button id="hl-save" class="primary">Save highlights</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Custom CSS</h2>
+    <p class="muted">For spot fixes. Dark mode works by inverting the page, so to make something look darker here, give it a lighter color. To show an element in its true colors, add <code>filter: invert(1) hue-rotate(180deg)</code>.</p>
+    <textarea id="customCSS" spellcheck="false" placeholder="/* Example: keep the company logo un-inverted */
+.company-logo { filter: invert(1) hue-rotate(180deg) !important; }"></textarea>
+    <div class="row-end">
+      <p class="msg" id="css-msg"></p>
+      <button id="save-css" class="primary">Save CSS</button>
+    </div>
+  </section>
+</main>
+<script src="shared.js"></script>
+<script src="theme.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

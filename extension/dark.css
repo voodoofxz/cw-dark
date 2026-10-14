@@ -1,0 +1,45 @@
+/*
+  Filter-based dark mode. ConnectWise PSA's UI is built from thousands of
+  generated class names and inline styles, so inverting the whole page and
+  flipping media back is far more reliable than per-element overrides.
+  Use the Custom CSS box in Options for any spot fixes.
+*/
+html:not(.cwdm-off) {
+  background-color: #fff !important;
+  filter: invert(1) hue-rotate(180deg)
+          brightness(var(--cwdm-brightness, 0.95))
+          contrast(var(--cwdm-contrast, 0.9)) !important;
+}
+
+/* Flip images, video, and background-image elements back to original colors */
+html:not(.cwdm-off):not(.cwdm-img-off) :is(
+  img, video, canvas, embed, object, svg image,
+  [style*="background-image:url"], [style*="background-image: url"],
+  [style*="background:url"], [style*="background: url"]
+) {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* Don't double-flip an image sitting inside an already flipped element */
+html:not(.cwdm-off):not(.cwdm-img-off)
+  :is([style*="background-image:url"], [style*="background-image: url"],
+      [style*="background:url"], [style*="background: url"]) img {
+  filter: none !important;
+}
+
+/* Areas ConnectWise already draws dark (e.g. left nav): flip them back */
+html:not(.cwdm-off):not(.cwdm-native-off) .cwdm-native {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+/* Media inside those areas is already showing true colors, so don't flip it again */
+html:not(.cwdm-off):not(.cwdm-img-off):not(.cwdm-native-off) .cwdm-native :is(
+  img, video, canvas, embed, object, svg image,
+  [style*="background-image:url"], [style*="background-image: url"],
+  [style*="background:url"], [style*="background: url"]
+) {
+  filter: none !important;
+}
+
+html:not(.cwdm-off) {
+  color-scheme: light; /* keeps native controls light so they invert to dark */
+}

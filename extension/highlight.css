@@ -1,0 +1,13 @@
+/* Rows whose status matches a highlight rule. Colors are set per row by highlight.js. */
+.cwdm-hl-row > td,
+.cwdm-hl-row > [role="gridcell"],
+.cwdm-hl-row:not(:has(> td, > [role="gridcell"])) {
+  background-color: color-mix(in srgb, var(--cwdm-hl) 40%, transparent) !important;
+}
+.cwdm-hl-row > :first-child {
+  box-shadow: inset 4px 0 0 var(--cwdm-hl) !important;
+}
+.cwdm-hl-row,
+.cwdm-hl-row * {
+  font-weight: 600 !important;
+}
