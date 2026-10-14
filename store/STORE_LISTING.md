@@ -1,10 +1,16 @@
-# Store listing — ConnectWise PSA Dark Mode 1.4.1
+# Store listing — ConnectWise PSA Dark Mode 1.4.2
 
 ## Name
 ConnectWise PSA Dark Mode
 
 ## Summary (132 characters max)
 Dark mode and color-coded ticket statuses for ConnectWise PSA. Works with cloud and self-hosted sites.
+
+## URLs
+Homepage: https://github.com/voodoofxz/cw-dark
+Support: https://github.com/voodoofxz/cw-dark/issues
+Official URL: leave blank (requires a verified domain)
+Privacy policy: not required (no data collected)
 
 ## Category
 Chrome: Productivity (Workflow & Planning) — Edge: Productivity
@@ -33,10 +39,13 @@ Advanced users can add their own CSS in the extension's settings. Custom CSS is 
 Privacy
 The extension only runs on sites you add, and it asks for access to each one. It collects no data and sends nothing anywhere. Your settings are saved in your browser and sync through your browser profile.
 
-What's new in 1.4.1
-• Fixed errors that could appear after the extension updated while ConnectWise tabs were open.
+What's new in 1.4.2
+• The Homepage link on the extensions page now opens the project on GitHub.
+
+Source code, changelog and bug reports: https://github.com/voodoofxz/cw-dark
 
 ## Version history
+- 1.4.2 — Added: Homepage link to the GitHub project
 - 1.4.1 — Fixed: errors after updating the extension while ConnectWise tabs were open
 - 1.4.0 — Added: export and import status highlights
 - 1.3.1 — Fixed: popup "Add this site" now saves the site. Renamed "Manage sites" to "Manage settings"

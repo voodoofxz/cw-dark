@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "ConnectWise PSA Dark Mode",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Dark mode and color-coded ticket statuses for ConnectWise PSA. Works with cloud and self-hosted sites.",
+  "homepage_url": "https://github.com/voodoofxz/cw-dark",
   "permissions": [
     "storage",
     "scripting",

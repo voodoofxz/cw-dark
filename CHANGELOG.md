@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.2
+- Added: Homepage link on the extensions page now opens the project on GitHub.
+
 ## 1.4.1
 - Fixed: errors logged when the extension was updated or reloaded while ConnectWise tabs were open.
 
