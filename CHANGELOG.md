@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.3
+- Fixed: checkmarks in checked boxes on tickets and projects showed black in dark mode; they now show white.
+
 ## 1.4.2
 - Added: Homepage link on the extensions page now opens the project on GitHub.
 

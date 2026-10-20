@@ -1,4 +1,4 @@
-# Store listing — ConnectWise PSA Dark Mode 1.4.2
+# Store listing — ConnectWise PSA Dark Mode 1.4.3
 
 ## Name
 ConnectWise PSA Dark Mode
@@ -39,12 +39,13 @@ Advanced users can add their own CSS in the extension's settings. Custom CSS is 
 Privacy
 The extension only runs on sites you add, and it asks for access to each one. It collects no data and sends nothing anywhere. Your settings are saved in your browser and sync through your browser profile.
 
-What's new in 1.4.2
-• The Homepage link on the extensions page now opens the project on GitHub.
+What's new in 1.4.3
+• Checkmarks in checked boxes now show white in dark mode instead of black.
 
 Source code, changelog and bug reports: https://github.com/voodoofxz/cw-dark
 
 ## Version history
+- 1.4.3 — Fixed: black checkmarks in checked boxes in dark mode
 - 1.4.2 — Added: Homepage link to the GitHub project
 - 1.4.1 — Fixed: errors after updating the extension while ConnectWise tabs were open
 - 1.4.0 — Added: export and import status highlights

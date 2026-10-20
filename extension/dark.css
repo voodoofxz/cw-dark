@@ -40,6 +40,16 @@ html:not(.cwdm-off):not(.cwdm-img-off):not(.cwdm-native-off) .cwdm-native :is(
   filter: none !important;
 }
 
+/* Grid checkboxes are navy/white images (Ext GXT "checker" divs, not real
+   inputs). Inverting turns the white checkmark black, so show them as drawn. */
+html:not(.cwdm-off) :is(.x-grid-row-checker, .x-grid-hd-checker) {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+/* Inside already-dark areas they already show true colors, so don't flip again */
+html:not(.cwdm-off):not(.cwdm-native-off) .cwdm-native :is(.x-grid-row-checker, .x-grid-hd-checker) {
+  filter: none !important;
+}
+
 html:not(.cwdm-off) {
   color-scheme: light; /* keeps native controls light so they invert to dark */
 }
